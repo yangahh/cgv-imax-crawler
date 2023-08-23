@@ -1,0 +1,32 @@
+# example
+version: '3'
+networks:
+  cgv-network:
+
+services:
+  python:
+    container_name: cgv-crawler
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    privileged: true
+    # init: /sbin/init
+    volumes:
+      - ./:/app/src
+      - ./entrypoint.sh:/usr/sbin/entrypoint.sh
+    networks:
+      - cgv-network
+    restart: always
+  my-mysql:
+    container_name: my-mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-password}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-cgv}
+    platform: linux/amd64
+    image: mysql:5.7
+    networks:
+      - cgv-network
+    ports:
+      - 3307:3306
+    restart: always
