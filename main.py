@@ -20,12 +20,14 @@ def post_message(token, channel, text):
     )
 
 
+DB_PASSWORD = config('DB_PASSWORD')
+
 # Mysql connect
 conn = pymysql.connect(
     db='cgv',
     user='root',
-    password='password',
-    host='my-mysql',
+    password=DB_PASSWORD,
+    host='localhost',
     port=3306,
     charset='utf8',
 )
@@ -119,4 +121,4 @@ for i in range(len(date_chuck_list)):
 
 post_message(SLACK_TOKEN, "#용아맥", last_date)
 driver.quit()
-cursor.close() 
+cursor.close()
