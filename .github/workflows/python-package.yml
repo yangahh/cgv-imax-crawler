@@ -22,7 +22,7 @@ jobs:
       uses: actions/setup-python@v3
     - name: Install dependencies
       run: |
-        apt-get update && apt-get -y install cron vim wget unzip curl jq systemd
+        sudo apt-get update && sudo apt-get -y install cron vim wget unzip curl jq systemd
         CHROME_URL=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json | jq -r '.channels.Stable.downloads.chrome[] | select(.platform == "linux64") | .url') \
         && sudo curl -sSLf --retry 3 --output /tmp/chrome-linux64.zip "$CHROME_URL" \
         && sudo unzip /tmp/chrome-linux64.zip -d /opt \
@@ -34,7 +34,7 @@ jobs:
         && rm -rf /tmp/chromedriver-linux64.zip \
         && mv -f /tmp/chromedriver-linux64/chromedriver "/usr/local/bin/chromedriver" \
         && chmod +x "/usr/local/bin/chromedriver"
-        apt-get install -y chromium chromium-driver
+        sudo apt-get install -y chromium chromium-driver
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Checkout the repo
