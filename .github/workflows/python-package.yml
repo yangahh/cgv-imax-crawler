@@ -21,6 +21,8 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: 3.9
+    - name: Checkout the repo
+      uses: actions/setup-python@v3
     - name: Install dependencies
       run: |
         apt-get update && apt-get -y install cron vim wget unzip curl jq systemd
@@ -38,6 +40,8 @@ jobs:
         apt-get install -y chromium chromium-driver
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Checkout the repo
+      uses: actions/setup-python@v3
     - name: set environment variable
       run: |
         echo "SLACK_TOKEN=${{ secrets.SLACK_TOKEN }}" >> .env
@@ -51,6 +55,9 @@ jobs:
         container port: 3306
         mysql root password: ${{ secrets.DB_PASSWORD }}
         mysql database: 'cgv'
+    - name: Checkout the repo
+      uses: actions/setup-python@v3
     - name: Run main.py
       run: |
+        cd /app/src
         python main.py
