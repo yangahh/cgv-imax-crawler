@@ -34,7 +34,9 @@ jobs:
         && rm -rf /tmp/chromedriver-linux64.zip \
         && mv -f /tmp/chromedriver-linux64/chromedriver "/usr/local/bin/chromedriver" \
         && chmod +x "/usr/local/bin/chromedriver"
-        sudo apt-get install -y chromium chromium-driver
+        sudo apt-get -f install
+        sudo apt-get install -y chromium
+        sugo apt-get install -y chromium-driver
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Checkout the repo
